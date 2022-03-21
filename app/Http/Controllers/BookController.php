@@ -20,15 +20,16 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        return Book::create([
-            'title' => $request->title,
-            'author' => $request->author
+        $data = request()->validate([
+            'title' => 'required',
+            'author' => 'required'
         ]);
+        
+        return Book::create($data);
     }
 
     /**
