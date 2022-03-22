@@ -47,5 +47,27 @@ class BookManamentTest extends TestCase
 
         $response->assertSessionHasErrors('author');
     }
+
+    /** @test */
+    public function a_book_can_be_updated(){
+
+        $this->withoutExceptionHandling();
+
+        $this->post('/api/books',[
+            'title' => 'Libro de prueba',
+            'author' => 'Autor de prueba'
+        ]);
+        
+        $book = Book::first();
+
+        $this->put('/api/books/'. $book->id ,[
+            'title' => 'Nuevo Libro de prueba',
+            'author' => 'Nuevo Autor de prueba'
+        ]);
+        
+        $this->assertEquals('Nuevo Libro de prueba', Book::first()->title);
+        $this->assertEquals('Nuevo Autor de prueba', Book::first()->author);
+
+    }
     
 }

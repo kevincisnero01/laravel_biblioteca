@@ -17,19 +17,9 @@ class BookController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function store()
     {
-        $data = request()->validate([
-            'title' => 'required',
-            'author' => 'required'
-        ]);
-        
-        return Book::create($data);
+        return Book::create($this->validateRequest());
     }
 
     /**
@@ -43,16 +33,10 @@ class BookController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(Book $book)
     {
-        //
+        $book->update($this->validateRequest());
     }
 
     /**
@@ -64,5 +48,13 @@ class BookController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function validateRequest()
+    {
+        return $data = request()->validate([
+            'title' => 'required',
+            'author' => 'required'
+        ]);
     }
 }
