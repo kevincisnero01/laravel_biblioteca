@@ -39,15 +39,9 @@ class BookController extends Controller
         $book->update($this->validateRequest());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        //
+        $book->delete();
     }
 
     public function validateRequest()

@@ -69,5 +69,23 @@ class BookManamentTest extends TestCase
         $this->assertEquals('Nuevo Autor de prueba', Book::first()->author);
 
     }
+
+    /** @test */
+    public function a_book_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->post('/api/books',[
+            'title' => 'Libro de prueba',
+            'author' => 'Autor de prueba'
+        ]);
+
+        $book = Book::first();
+        $this->assertCount(1, Book::all());
+
+        $this->delete('/api/books/'. $book->id);
+
+        $this->assertCount(0, Book::all());
+    }
     
 }
